@@ -1,0 +1,34 @@
+{
+  "name": "xdmod-nairr",
+  "version": "11.5.0",
+  "release": "1",
+  "files": {
+    "include_paths": [
+    ],
+    "include_patterns": [
+    ],
+    "exclude_paths": [
+      "/fstree",
+      "/scripts",
+      "/specification"
+    ],
+    "exclude_patterns": [
+    ]
+  },
+  "file_maps": {
+    "data": [
+      "classes"
+    ],
+    "bin": [
+    ],
+    "doc": [
+      "LICENSE"
+    ],
+    "etc": [
+      "configuration/etl",
+      "configuration/roles.d",
+      "configuration/datawarehouse.d",
+      "configuration/rawstatistics.d"
+    ]
+  }
+}
