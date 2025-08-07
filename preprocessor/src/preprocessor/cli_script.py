@@ -18,8 +18,9 @@ import pandas as pd
 
 from preprocessor.lib import helpers
 
+
 def process_anvil(filep, fullpath, filename, dest_dir, _):
-    delimiter='|'
+    delimiter = '|'
     reader = csv.reader(filep, delimiter=delimiter)
 
     srcstat = os.stat(fullpath)
@@ -42,7 +43,7 @@ def process_anvil(filep, fullpath, filename, dest_dir, _):
         line[5] = 'NAIRR' + line[5][2:8]
 
         if resource not in tmpfiles:
-            tmpfiles[resource] = tempfile.NamedTemporaryFile(mode="w", encoding="utf=8", delete=False)    
+            tmpfiles[resource] = tempfile.NamedTemporaryFile(mode="w", encoding="utf=8", delete=False)
 
         tmpfiles[resource].write('|'.join(line[0:26]) + "\n")
 
@@ -56,7 +57,8 @@ def process_anvil(filep, fullpath, filename, dest_dir, _):
         os.chmod(target, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
         os.utime(target, (srcstat[stat.ST_ATIME], srcstat[stat.ST_MTIME]))
 
-def process_delta(filep, fullpath, filename, dest_dir, mapping):
+
+def process_json(filep, fullpath, filename, dest_dir, translator):
 
     try:
         slurm_log = json.load(filep)
@@ -69,12 +71,11 @@ def process_delta(filep, fullpath, filename, dest_dir, mapping):
     outdata = {}
 
     for job in slurm_log['jobs']:
-        # TODO how to configure the charge and resource mapping?
-        charge_id = job['account'][0:4]
-        resource = job['account'][5:]
 
-        if charge_id in mapping:
-            job['account'] = mapping[charge_id]
+        charge_id, resource = translator.translate(job, fullpath)
+
+        if charge_id is not None:
+            job['account'] = charge_id
 
             if resource not in outdata:
                 outdata[resource] = []
@@ -85,13 +86,14 @@ def process_delta(filep, fullpath, filename, dest_dir, mapping):
         if not os.path.exists(os.path.join(dest_dir, resource_name)):
             os.mkdir(os.path.join(dest_dir, resource_name))
 
-        output = { 'jobs':  out_jobs}
+        output = {'jobs':  out_jobs}
         target = os.path.join(dest_dir, resource_name, filename)
         with open(target, 'w', encoding="utf=8") as outfp:
             json.dump(output, outfp)
 
         os.chmod(target, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
         os.utime(target, (srcstat[stat.ST_ATIME], srcstat[stat.ST_MTIME]))
+
 
 def main():
 
@@ -129,13 +131,20 @@ def main():
         for m, v in mapping.items():
             logging.debug(f'{m} -> {v}')
 
+    trnsl = None
+    if args.resource == 'delta':
+        trnsl = helpers.NcsaTranslator(mapping)
+    elif args.resource == 'expanse':
+        trnsl = helpers.SdscTranslator(mapping)
+
     for fullpath, filename in helpers.fileiterator(conf['source_dir'], conf['days'], conf['file_regex']):
 
         open_fn = gzip.open if filename.endswith('.gz') else open
-        with open_fn(fullpath, encoding='utf-8', errors='ignore') as filep:
+        with open_fn(fullpath, 'rt', encoding='utf-8', errors='ignore') as filep:
 
-            if args.resource == 'delta':
-                process_delta(filep, fullpath, filename, conf['dest_dir'], mapping)
+            if filename.endswith('.json') or filename.endswith('.json.gz'):
+                process_json(filep, fullpath, filename, conf['dest_dir'], trnsl)
             elif args.resource == 'anvil':
                 process_anvil(filep, fullpath, filename, conf['dest_dir'], mapping)
-
+            else:
+                raise Exception('TODO')
