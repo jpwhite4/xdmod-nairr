@@ -62,6 +62,7 @@ def process_json(filep, fullpath, filename, dest_dir, translator):
 
     try:
         slurm_log = json.load(filep)
+        logging.debug(f"Processing {filename}")
     except json.decoder.JSONDecodeError:
         logging.warning("Unable to JSON decode " + fullpath)
         return
@@ -87,13 +88,15 @@ def process_json(filep, fullpath, filename, dest_dir, translator):
             os.mkdir(os.path.join(dest_dir, resource_name))
 
         output = {'jobs':  out_jobs}
-        target = os.path.join(dest_dir, resource_name, filename)
+        outfilename = filename[:-3] if filename.endswith('.gz') else filename
+        target = os.path.join(dest_dir, resource_name, outfilename)
         with open(target, 'w', encoding="utf=8") as outfp:
             json.dump(output, outfp)
 
         os.chmod(target, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
         os.utime(target, (srcstat[stat.ST_ATIME], srcstat[stat.ST_MTIME]))
 
+        logging.info("Wrote " + outfilename)
 
 def main():
 
