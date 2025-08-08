@@ -23,34 +23,36 @@ def fileiterator(datasource):
         mtch = exp.match(filename)
         if not mtch:
             continue
-        #if mtch.group(1) != 'expanse_gpu':
-        #    continue
+        if mtch.group(1) in ('expanse', 'expanse_gpu'):
+            continue
 
         fdate = datetime.datetime.strptime(mtch.group(2), '%Y-%m-%d')
-        if now - fdate > datetime.timedelta(days=30):
+        if now - fdate > datetime.timedelta(days=365):
             logging.debug('Skip %s due to time range', filename)
             continue
 
         fullpath = os.path.join(datasource, filename)
         if os.path.isfile(fullpath):
-            yield (fullpath, filename)
+            yield (fullpath, filename, mtch.group(1))
 
 def main():
 
     srcdir = "/filetransfer/pcparchives/sdsc/accounting/"
     outdir = "/data/sdsc/postprocessed"
 
-    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', datefmt='%Y-%m-%dT%H:%M:%S', level=logging.WARNING)
+    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', datefmt='%Y-%m-%dT%H:%M:%S', level=logging.INFO)
     logging.captureWarnings(True)
 
     mapping_data = pd.read_excel('/data/mapping/NAIRR Jan-2025 Usage.xlsx', sheet_name='SDSC')
 
-
     mapping = {}
     for row in mapping_data.iterrows():
-        mapping[row[1]['SDSC Local Project id'].lower()] = row[1]['NAIRR Grant'].lower()
+        mapping[row[1]['PROJECT_NUMBER'].lower()] = row[1]['PROPOSAL_NUMBER'].lower()
 
-    for fullpath, filename in fileiterator(srcdir):
+    good = 0
+    bad = 0
+
+    for fullpath, filename, resource in fileiterator(srcdir):
 
         with gzip.open(fullpath, "r") as filep:
             
@@ -64,7 +66,6 @@ def main():
 
             for job in slurm_log['jobs']:
                 charge_id = job['account']
-                resource = 'todo'
 
                 if charge_id in mapping:
                     job['account'] = mapping[charge_id]
@@ -73,6 +74,11 @@ def main():
                         outdata[resource] = []
 
                     outdata[resource].append(job)
+
+                    good += 1
+                else:
+                    print(f"Error no mapping for {charge_id}")
+                    bad += 1
 
             for resource_name, out_jobs in outdata.items():
                 if not os.path.exists(os.path.join(outdir, resource_name)):
@@ -83,6 +89,8 @@ def main():
                 with open(target, 'w', encoding="utf=8") as outfp:
                     json.dump(output, outfp)
                 os.chmod(target, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
+
+    logging.info(f'Seen {good} jobs. Failed on {bad} ones.')
 
 if __name__ == "__main__":
     main()

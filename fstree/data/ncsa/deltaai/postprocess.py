@@ -31,7 +31,7 @@ def fileiterator(datasource):
 
 def main():
 
-    srcdir = "/filetransfer/pcparchives/ncsa/deltaai"
+    srcdir = "/filetransfer/pcparchives/ncsa/deltaai/slurm_logs"
     outdir = "/data/ncsa/deltaai/postprocessed"
 
     logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', datefmt='%Y-%m-%dT%H:%M:%S', level=logging.WARNING)
