@@ -1,0 +1,11 @@
+/*Import the ORCID Font */
+@import "https://fonts.googleapis.com/css2?family=Nunito Sans:ital,opsz,wght@0,6..12,400;0,6..12,700;1,6..12,400&display=swap";
+
+#SSOLoginLink button {
+    padding-left: 30px;
+    height: 30px;
+    background-position: left;
+    font-family: "Nunito Sans", serif, sans-serif;
+    font-size: 16px;
+}
+

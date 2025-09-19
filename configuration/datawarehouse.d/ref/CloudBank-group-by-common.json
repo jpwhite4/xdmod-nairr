@@ -1,0 +1,450 @@
+{
+    "cb_fund": {
+        "name": "Fund",
+        "description_html": "The fund that spent money on public cloud services. Money is deposited into a fund from which it is dispersed to cloud provider accounts to cover charges for usage.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "fund_id": "fund_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "fund_id",
+                "short_name": "id",
+                "name": "title",
+                "order_id": "fund_id"
+            },
+            "joins": [
+                {
+                    "name": "funds"
+                }
+            ],
+            "orderby": [
+                "fund_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "fund_id": "SELECT fund_id FROM modw_public_cloud.funds WHERE fund_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT title AS filter_name FROM modw_public_cloud.funds WHERE fund_id IN (__filter_values__) ORDER BY title"
+    },
+    "cb_funder": {
+        "name": "Funding Source",
+        "description_html": "The funding source that awarded the fund(s) that spent money on public cloud services.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "funder_id": "funder_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "funder_id",
+                "short_name": "name",
+                "name": "name",
+                "order_id": "funder_id"
+            },
+            "joins": [
+                {
+                    "name": "funders"
+                }
+            ],
+            "orderby": [
+                "funder_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "funder_id": "SELECT funder_id FROM modw_public_cloud.funders WHERE funder_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT name AS filter_name FROM modw_public_cloud.funders WHERE funder_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi": {
+        "name": "Fund PI",
+        "description_html": "The principal investigator on the fund(s) that spent money on public cloud services.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "person_id": "pi_person_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "person_id",
+                "short_name": "persons.full_name",
+                "name": "persons.full_name",
+                "order_id": "person_id"
+            },
+            "joins": [
+                {
+                    "name": "persons"
+                }
+            ],
+            "orderby": [
+                "persons.full_name",
+                "persons.person_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_person_id": "SELECT person_id FROM modw_public_cloud.persons WHERE person_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT full_name AS filter_name FROM modw_public_cloud.persons WHERE person_id IN (__filter_values__) ORDER BY full_name"
+    },
+    "cb_pi_institution": {
+        "name": "Fund PI Institution",
+        "description_html": "The primary institution of the principal investigator(s) on the fund(s) that spent money on public cloud services.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "institution_id": "pi_institution_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "institution_id",
+                "short_name": "name",
+                "name": "name",
+                "order_id": "institution_id"
+            },
+            "joins": [
+                {
+                    "name": "institutions"
+                }
+            ],
+            "orderby": [
+                "institutions.name",
+                "institutions.institution_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_id": "SELECT institution_id FROM modw_public_cloud.institutions WHERE institution_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT name AS filter_name FROM modw_public_cloud.institutions WHERE institution_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi_institution_carnegie_classification": {
+        "name": "Fund PI Institution Carnegie Classification",
+        "description_html": "The Carnegie Classification for the primary institution(s) of the principal investigator(s) on the fund(s) that spent money on public cloud services.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "carnegie_classification_id": "pi_institution_carnegie_classification_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "carnegie_classification_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "carnegie_classification_id"
+            },
+            "joins": [
+                {
+                    "name": "carnegie_classifications"
+                }
+            ],
+            "orderby": [
+                "name",
+                "carnegie_classification_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_carnegie_classification_id": "SELECT carnegie_classification_id FROM modw_public_cloud.carnegie_classifications WHERE carnegie_classification_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.carnegie_classifications WHERE carnegie_classification_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi_institution_carnegie_research_designation": {
+        "name": "Fund PI Institution Carnegie Research Activity Designation",
+        "description_html": "The Carnegie Research Activity Designation for the primary institution(s) of the principal investigator(s) on the fund(s) that spent money on public cloud services.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "carnegie_research_designation_id": "pi_institution_carnegie_research_designation_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "carnegie_research_designation_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "carnegie_research_designation_id"
+            },
+            "joins": [
+                {
+                    "name": "carnegie_research_designations"
+                }
+            ],
+            "orderby": [
+                "name",
+                "carnegie_research_designation_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_carnegie_research_designation_id": "SELECT carnegie_research_designation_id FROM modw_public_cloud.carnegie_research_designations WHERE carnegie_research_designation_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.carnegie_research_designations WHERE carnegie_research_designation_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi_institution_epscor": {
+        "name": "Fund PI Institution EPSCoR",
+        "description_html": "Whether the primary institution(s) of the principal investigator(s) on the fund(s) that spent money on public cloud services are in an EPSCoR jurisdiction.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "epscor_id": "pi_institution_epscor_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "epscor_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "epscor_id"
+            },
+            "joins": [
+                {
+                    "name": "epscor"
+                }
+            ],
+            "orderby": [
+                "name",
+                "epscor_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_epscor_id": "SELECT epscor_id FROM modw_public_cloud.epscor WHERE epscor_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.epscor WHERE epscor_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi_institution_city": {
+        "name": "Fund PI Institution City",
+        "description_html": "The city in which the primary institution(s) of the principal investigator(s) on the fund(s) that spent money on public cloud services are located.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "city_id": "pi_institution_city_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "city_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "city_id"
+            },
+            "joins": [
+                {
+                    "name": "cities"
+                }
+            ],
+            "orderby": [
+                "name",
+                "city_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_epscor_id": "SELECT city_id FROM modw_public_cloud.cities WHERE city_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.cities WHERE city_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi_institution_state": {
+        "name": "Fund PI Institution State",
+        "description_html": "The state in which the primary institution(s) of the principal investigator(s) on the fund(s) that spent money on public cloud services are located.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "state_id": "pi_institution_state_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "state_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "state_id"
+            },
+            "joins": [
+                {
+                    "name": "states"
+                }
+            ],
+            "orderby": [
+                "name",
+                "state_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_state_id": "SELECT state_id FROM modw_public_cloud.states WHERE state_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.states WHERE state_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_pi_institution_country": {
+        "name": "Fund PI Institution Country",
+        "description_html": "The country in which the primary institution(s) of the principal investigator(s) on the fund(s) that spent money on public cloud services are located.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "country_id": "pi_institution_country_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "country_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "country_id"
+            },
+            "joins": [
+                {
+                    "name": "countries"
+                }
+            ],
+            "orderby": [
+                "name",
+                "country_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "pi_institution_country_id": "SELECT country_id FROM modw_public_cloud.countries WHERE country_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.countries WHERE country_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_nsf_directorate": {
+        "name": "Funding Source Directorate",
+        "description_html": "The NSF Directorate that awarded the fund(s) that spent money on public cloud services. For non-NSF funding sources, this value will be. For non-NSF funding sources, this value will be \"Unknown\".",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "nsf_directorate_id": "nsf_directorate_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "nsf_directorate_id",
+                "short_name": "name",
+                "name": "full_name",
+                "order_id": "nsf_directorate_id"
+            },
+            "joins": [
+                {
+                    "name": "nsf_directorates"
+                }
+            ],
+            "orderby": [
+                "name",
+                "nsf_directorate_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "nsf_directorate_id": "SELECT nsf_directorate_id FROM modw_public_cloud.nsf_directorates WHERE nsf_directorate_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT full_name AS filter_name FROM modw_public_cloud.nsf_directorates WHERE nsf_directorate_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_nsf_division": {
+        "name": "Funding Source Division",
+        "description_html": "The NSF Division that awarded the fund(s) that spent money on public cloud services. For non-NSF funding sources, this value will be \"Unknown.\"",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "nsf_division_id": "nsf_division_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "nsf_division_id",
+                "short_name": "name",
+                "name": "full_name",
+                "order_id": "nsf_division_id"
+            },
+            "joins": [
+                {
+                    "name": "nsf_divisions"
+                }
+            ],
+            "orderby": [
+                "name",
+                "nsf_division_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "nsf_division_id": "SELECT nsf_division_id FROM modw_public_cloud.nsf_divisions WHERE nsf_division_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT full_name AS filter_name FROM modw_public_cloud.nsf_divisions WHERE nsf_division_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_field_of_science": {
+        "name": "Field of Science",
+        "description_html": "The branch of science under which a fund's research falls.",
+        "attribute_table_schema": "modw_public_cloud",
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "field_of_science_id": "field_of_science_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "field_of_science_id",
+                "short_name": "full_name",
+                "name": "full_name",
+                "order_id": "field_of_science_id"
+            },
+            "joins": [
+                {
+                    "name": "fields_of_science"
+                }
+            ],
+            "orderby": [
+                "name",
+                "field_of_science_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "field_of_science_id": "SELECT field_of_science_id FROM modw_public_cloud.fields_of_science WHERE field_of_science_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT full_name AS filter_name FROM modw_public_cloud.fields_of_science WHERE field_of_science_id IN (__filter_values__) ORDER BY full_name"
+    },
+    "cb_nairrproject": {
+        "name": "NAIRR Project",
+        "description_html": "The NAIRR Project associated with the cloudbank fund.",
+        "attribute_table_schema": "modw_public_cloud",
+        "alternate_group_by_columns": [
+            "fund_id"
+        ],
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "fund_id": "fund_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "fund_id",
+                "short_name": "project_id",
+                "name": "project_id",
+                "order_id": "project_id"
+            },
+            "joins": [
+                {
+                    "name": "funds"
+                }
+            ],
+            "orderby": [
+                "fund_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "fund_id": "SELECT fund_id FROM modw_public_cloud.funds WHERE fund_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT project_id AS filter_name FROM modw_public_cloud.funds WHERE fund_id IN (__filter_values__) ORDER BY title"
+    }
+}

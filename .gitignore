@@ -10,6 +10,9 @@ cache/
 log/
 logs/
 
+# NAIRR exclusions
+/tests/artifacts/nairr
+
 # Created by https://www.gitignore.io/api/archives,bower,intellij,xcode,composer,node,osx,sass,maven,java,linux,vim,tags
 
 ### Archives ###

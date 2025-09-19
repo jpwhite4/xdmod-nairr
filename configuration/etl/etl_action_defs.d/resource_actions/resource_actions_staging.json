@@ -14,8 +14,8 @@
             "request_id": "r.request_id",
             "request_type_id": "r.request_type_id",
             "request_entry_date": "(r.entry_date AT TIME ZONE '${TIMEZONE}')::timestamp",
-            "pi_xras_person_id": "COALESCE(rpr.person_id, -1)",
-            "pi_xras_organization_id": "COALESCE(p.organization_id, -1)",
+            "pi_xras_person_id": "(SELECT COALESCE(rpr.person_id, -1) AS \"pi_xras_person_id\" FROM \"xras\".\"request_people_roles\" AS rpr LEFT JOIN \"xras\".\"request_role_types\" AS rrt ON rrt.request_role_type_id = rpr.request_role_type_id LEFT JOIN \"xras\".\"people\" AS p ON p.person_id = rpr.person_id WHERE rrt.request_role_type = 'PI' AND COALESCE(rpr.end_date, '9999-01-01') >= r.entry_date AND rpr.request_id = r.request_id ORDER BY COALESCE(rpr.end_date, '9999-01-01') ASC LIMIT 1)",
+            "pi_xras_organization_id": "(SELECT COALESCE(p.organization_id, -1) AS \"pi_xras_organization_id\" FROM \"xras\".\"request_people_roles\" AS rpr LEFT JOIN \"xras\".\"request_role_types\" AS rrt ON rrt.request_role_type_id = rpr.request_role_type_id LEFT JOIN \"xras\".\"people\" AS p ON p.person_id = rpr.person_id WHERE rrt.request_role_type = 'PI' AND COALESCE(rpr.end_date, '9999-01-01') >= r.entry_date AND rpr.request_id = r.request_id ORDER BY COALESCE(rpr.end_date, '9999-01-01') ASC LIMIT 1)",
             "action_id": "ac.action_id",
             "action_entry_date": "(ac.entry_date AT TIME ZONE '${TIMEZONE}')::timestamp",
             "action_day_id": "EXTRACT(year FROM (ac.entry_date AT TIME ZONE '${TIMEZONE}')::timestamp) * 100000 + EXTRACT(doy FROM (ac.entry_date AT TIME ZONE '${TIMEZONE}')::timestamp)",
@@ -57,24 +57,6 @@
             "alias": "o",
             "on": "o.opportunity_id = r.opportunity_id"
         },{
-            "name": "request_people_roles",
-            "schema": "${SOURCE_SCHEMA}",
-            "alias": "rpr",
-            "type": "LEFT",
-            "on": "r.request_id = rpr.request_id AND r.entry_date BETWEEN rpr.begin_date and COALESCE(rpr.end_date, '9999-01-01')"
-        },{
-            "name": "request_role_types",
-            "schema": "${SOURCE_SCHEMA}",
-            "alias": "rrt",
-            "type": "LEFT",
-            "on": "rrt.request_role_type_id = rpr.request_role_type_id"
-        },{
-            "name": "people",
-            "schema": "${SOURCE_SCHEMA}",
-            "alias": "p",
-            "type": "LEFT",
-            "on": "p.person_id = rpr.person_id"
-        },{
             "name": "allocations_processes",
             "schema": "${SOURCE_SCHEMA}",
             "alias": "alloc_procs",
@@ -83,7 +65,6 @@
 
         "where": [
             "alloc_procs.allocations_process_name_abbr = 'NAIRR'",
-            "rrt.request_role_type = 'PI'",
             "ac.date_resolved is not null"
         ]
     }

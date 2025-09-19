@@ -1,0 +1,20 @@
+{
+  "+roles": {
+    "acl.nairr-reports": {
+      "type": "tab",
+      "display": "Nairr Reports Tab",
+      "id": 98,
+      "permitted_modules": [
+        {
+          "name": "nairr_reports",
+          "title": "Nairr Reports",
+          "position": 2000,
+          "javascriptClass": "XDMoD.Module.NairrReports",
+          "javascriptReference": "CCR.xdmod.ui.nairrReports",
+          "userManualSectionName": "Nairr Reports",
+          "tooltip": ""
+        }
+      ]
+    }
+  }
+}

@@ -3,32 +3,16 @@
   "version": "11.5.0",
   "release": "1",
   "files": {
-    "include_paths": [
-    ],
-    "include_patterns": [
-    ],
-    "exclude_paths": [
-      "/fstree",
-      "/scripts",
-      "/specification"
-    ],
-    "exclude_patterns": [
-    ]
+    "include_paths": [],
+    "include_patterns": [],
+    "exclude_paths": ["/specification"],
+    "exclude_patterns": ["#/tests#"]
   },
   "file_maps": {
-    "data": [
-      "classes"
-    ],
-    "bin": [
-    ],
-    "doc": [
-      "LICENSE"
-    ],
-    "etc": [
-      "configuration/etl",
-      "configuration/roles.d",
-      "configuration/datawarehouse.d",
-      "configuration/rawstatistics.d"
-    ]
+    "data": ["classes", "html", "templates"],
+    "bin": ["fstree/usr/local/bin/"],
+    "doc": ["LICENSE"],
+    "lib": ["scripts/"],
+    "etc": ["configuration/"]
   }
 }

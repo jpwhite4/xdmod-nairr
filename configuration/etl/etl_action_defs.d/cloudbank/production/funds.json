@@ -7,9 +7,10 @@
         "records": {
             "id": "sf.id",
             "funder_id": "f.funder_id",
-            "project_id": "CASE WHEN sf.id = -1 THEN 'Unknown' WHEN sf.id LIKE 'NAIRR%' THEN sf.id ELSE CONCAT('NAIRR', sf.id) END",
             "nsf_directorate_id": "nd.nsf_directorate_id",
             "nsf_division_id": "dv.nsf_division_id",
+            "field_of_science_id": "COALESCE(fos.field_of_science_id, -1)",
+	    "project_id": "CASE WHEN sf.id = -1 THEN 'Unknown' WHEN sf.id LIKE 'NAIRR%' THEN sf.id ELSE CONCAT('NAIRR', sf.id) END",
             "title": "CONCAT(sf.id, ' ', sf.title)",
             "start_date": "sf.start_date",
             "end_date": "sf.end_date",
@@ -45,6 +46,13 @@
                 "schema": "${SOURCE_SCHEMA}",
                 "alias": "dv",
                 "on": "dv.name = sf.nsf_division AND dv.nsf_directorate_id = nd.nsf_directorate_id"
+            },
+            {
+                "name": "fields_of_science",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "fos",
+                "on": "sf.field_of_science = fos.name",
+                "type": "LEFT"
             }
         ]
     }

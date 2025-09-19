@@ -1,0 +1,229 @@
+{
+    "cb_cloud_provider": {
+        "name": "Cloud Provider",
+        "description_html": "A provider of cloud services, e.g. Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform (GCP).",
+        "attribute_table_schema": "modw_public_cloud",
+        "alternate_group_by_columns": [
+            "cloud_provider_id"
+        ],
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "cloud_provider_id": "cloud_provider_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "cloud_provider_id",
+                "short_name": "name",
+                "name": "display",
+                "order_id": "cloud_provider_id"
+            },
+            "joins": [
+                {
+                    "name": "cloud_providers"
+                }
+            ],
+            "orderby": [
+                "cloud_provider_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "cloud_provider_id": "SELECT cloud_provider_id FROM modw_public_cloud.cloud_providers WHERE cloud_provider_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT display AS filter_name FROM modw_public_cloud.cloud_providers WHERE cloud_provider_id IN (__filter_values__) ORDER BY display"
+    },
+    "cb_location": {
+        "name": "Cloud Location",
+        "description_html": "The geographical location where cloud providers cluster data centers to provide services.",
+        "attribute_table_schema": "modw_public_cloud",
+        "alternate_group_by_columns": [
+            "location_id"
+        ],
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "location_id": "location_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "location_id",
+                "short_name": "name",
+                "name": "name",
+                "order_id": "location_id"
+            },
+            "joins": [
+                {
+                    "name": "locations"
+                }
+            ],
+            "orderby": [
+                "location_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "location_id": "SELECT location_id FROM modw_public_cloud.locations WHERE location_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT name AS filter_name FROM modw_public_cloud.locations WHERE location_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_service": {
+        "name": "Cloud Service",
+        "description_html": "The particular cloud provider service on which funds spent money.",
+        "attribute_table_schema": "modw_public_cloud",
+        "alternate_group_by_columns": [
+            "service_id"
+        ],
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "service_id": "service_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "service_id",
+                "short_name": "name",
+                "name": "name",
+                "order_id": "service_id"
+            },
+            "joins": [
+                {
+                    "name": "services"
+                }
+            ],
+            "orderby": [
+                "service_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "service_id": "SELECT service_id FROM modw_public_cloud.services WHERE service_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT name AS filter_name FROM modw_public_cloud.services WHERE service_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_sub_service": {
+        "name": "Cloud Sub-Service",
+        "description_html": "Within each cloud service there may be one or more sub-services that are charged at different rates (e.g., when using AWS's EC2 service, in addition to being charged for instance time, you are also charged for data transfer, file storage etc. These are seen as sub-services of the EC2 service).",
+        "attribute_table_schema": "modw_public_cloud",
+        "alternate_group_by_columns": [
+            "sub_service_id"
+        ],
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "sub_service_id": "sub_service_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "sub_service_id",
+                "short_name": "name",
+                "name": "name",
+                "order_id": "sub_service_id"
+            },
+            "joins": [
+                {
+                    "name": "sub_services"
+                }
+            ],
+            "orderby": [
+                "sub_service_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "sub_service_id": "SELECT sub_service_id FROM modw_public_cloud.sub_services WHERE sub_service_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT name AS filter_name FROM modw_public_cloud.sub_services WHERE sub_service_id IN (__filter_values__) ORDER BY name"
+    },
+    "cb_fund": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_fund"
+    },
+    "cb_funder": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_funder"
+    },
+    "cb_pi": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi"
+    },
+    "cb_pi_institution": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution"
+    },
+    "cb_pi_institution_carnegie_classification": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution_carnegie_classification"
+    },
+    "cb_pi_institution_carnegie_research_designation": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution_carnegie_research_designation"
+    },
+    "cb_pi_institution_epscor": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution_epscor"
+    },
+    "cb_pi_institution_city": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution_city"
+    },
+    "cb_pi_institution_state": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution_state"
+    },
+    "cb_pi_institution_country": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_pi_institution_country"
+    },
+    "cb_nsf_directorate": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_nsf_directorate"
+    },
+    "cb_nsf_division": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_nsf_division"
+    },
+    "cb_field_of_science": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_field_of_science"
+    },
+    "cb_nairrproject": {
+        "$ref": "datawarehouse.d/ref/CloudBank-group-by-common.json#/cb_nairrproject"
+    },
+    "cb_account": {
+        "name": "Cloud Provider Account",
+        "description_html": "A cloud provider specific financial account that is charged for usage.",
+        "attribute_table_schema": "modw_public_cloud",
+        "alternate_group_by_columns": [
+            "account_id"
+        ],
+        "attribute_to_aggregate_table_key_map": [
+            {
+                "account_id": "account_id"
+            }
+        ],
+        "attribute_values_query": {
+            "records": {
+                "id": "account_id",
+                "short_name": "id",
+                "name": "id",
+                "order_id": "account_id"
+            },
+            "joins": [
+                {
+                    "name": "accounts"
+                }
+            ],
+            "orderby": [
+                "account_id"
+            ],
+            "query_hint": "DISTINCT"
+        },
+        "attribute_filter_map_query": {
+            "account_id": "SELECT account_id FROM modw_public_cloud.accounts WHERE account_id IN (__filter_values__)"
+        },
+        "attribute_description_query": "SELECT DISTINCT id AS filter_name FROM modw_public_cloud.accounts WHERE account_id IN (__filter_values__) ORDER BY id"
+    },
+    "none": {
+        "$ref": "datawarehouse.d/ref/CloudBankSpend-group-by-none.json"
+    },
+    "day": {
+        "$ref": "datawarehouse.d/ref/group-by-time-period.json#/day"
+    },
+    "month": {
+        "$ref": "datawarehouse.d/ref/group-by-time-period.json#/month"
+    },
+    "quarter": {
+        "$ref": "datawarehouse.d/ref/group-by-time-period.json#/quarter"
+    },
+    "year": {
+        "$ref": "datawarehouse.d/ref/group-by-time-period.json#/year"
+    }
+}

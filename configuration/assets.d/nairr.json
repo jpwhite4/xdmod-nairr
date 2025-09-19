@@ -1,0 +1,8 @@
+{
+  "nairr": {
+    "portal": {
+      "js": ["gui/js/modules/NairrReports.js"],
+      "css": ["gui/css/CustomReports.css"]
+    }
+  }
+}

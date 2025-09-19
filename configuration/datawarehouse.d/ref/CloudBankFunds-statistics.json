@@ -1,0 +1,9 @@
+{
+  "cb_total_fund_count": {
+    "description_html": "The total number of funds that could have spent money on public cloud services.",
+    "formula": "COUNT(DISTINCT(agg.fund_id))",
+    "name": "Number of Funds: Active",
+    "precision": 0,
+    "unit": "Funds"
+  }
+}

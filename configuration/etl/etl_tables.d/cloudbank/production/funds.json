@@ -19,12 +19,6 @@
                 "comment": "External ID"
             },
             {
-                "name": "project_id",
-                "type": "varchar(32)",
-                "nullable": false,
-                "comment": "NAIRR Project Identifier"
-            },
-            {
                 "name": "funder_id",
                 "type": "int(11)",
                 "nullable": false
@@ -39,6 +33,17 @@
                 "type": "int(11)",
                 "nullable": false
             },
+            {
+                "name": "field_of_science_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+	    {
+		"name": "project_id",
+		"type": "varchar(32)",
+		"nullable": false,
+		"comment": "NAIRR Project Identifier"
+	    },
             {
                 "name": "title",
                 "type": "varchar(2048)",
@@ -109,6 +114,12 @@
                     "id"
                 ],
                 "is_unique": true
+            },
+            {
+                "name": "idx_field_of_science_id",
+                "columns": [
+                    "field_of_science_id"
+                ]
             }
         ],
         "foreign_key_constraints": [
@@ -142,6 +153,17 @@
                 "referenced_table": "nsf_divisions",
                 "referenced_columns": [
                     "nsf_division_id"
+                ],
+                "on_delete": "CASCADE"
+            },
+            {
+                "name": "fk_fund_field_of_science_id",
+                "columns": [
+                    "field_of_science_id"
+                ],
+                "referenced_table": "fields_of_science",
+                "referenced_columns": [
+                    "field_of_science_id"
                 ],
                 "on_delete": "CASCADE"
             }

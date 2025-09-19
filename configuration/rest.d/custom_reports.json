@@ -1,0 +1,6 @@
+{
+  "custom_reports": {
+    "prefix": "custom_reports",
+    "controller": "Rest\\Controllers\\CustomReportControllerProvider"
+  }
+}

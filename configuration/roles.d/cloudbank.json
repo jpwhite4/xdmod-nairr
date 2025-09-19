@@ -1,59 +1,145 @@
 {
     "module": "cloudbank",
     "+roles": {
-        "+cd": {
-            "+query_descripters": [
+        "cb": {
+            "display": "CloudBank",
+            "type": "data",
+            "query_descripters": [
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "none"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_cloud_provider"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_account"
+                },
+                {
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_service"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_sub_service"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_fund"
                 },
                 {
-                    "realm": "CloudBank",
-                    "group_by": "cb_nairrproject"
-                },
-                {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_funder"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_pi"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution"
+                },
+                {
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution_carnegie_classification"
+                },
+                {
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution_carnegie_research_designation"
+                },
+                {
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution_epscor"
+                },
+                {
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution_city"
+                },
+                {
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution_state"
+                },
+                {
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_pi_institution_country"
+                },
+                {
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_location"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_nsf_directorate"
                 },
                 {
-                    "realm": "CloudBank",
+                    "realm": "CloudBankSpend",
                     "group_by": "cb_nsf_division"
                 },
                 {
-                    "realm": "CloudBank",
-                    "group_by": "cb_co_pi"
+                    "realm": "CloudBankSpend",
+                    "group_by": "cb_field_of_science"
+                },
+		{
+		    "realm": "CloudBankSpend",
+		    "group_by": "cb_nairrproject"
+		},
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "none"
                 },
                 {
-                    "realm": "CloudBank",
-                    "group_by": "cb_manager"
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_funder"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution_carnegie_classification"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution_carnegie_research_designation"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution_epscor"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution_city"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution_state"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_pi_institution_country"
+                },
+                {
+                    "realm": "CloudBankFundss",
+                    "group_by": "cb_nsf_directorate"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_nsf_division"
+                },
+                {
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_field_of_science"
+                },
+		{
+                    "realm": "CloudBankFunds",
+                    "group_by": "cb_nairrproject"
                 }
             ],
             "summary_charts": [
