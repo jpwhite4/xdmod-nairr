@@ -122,7 +122,7 @@ def main():
     logging.captureWarnings(True)
     logger = logging.getLogger(__name__)
 
-    conf = helpers.config('config.json', args.resource)
+    conf = helpers.config(args.config, args.resource)
 
     mapping = {}
     if 'sheet_name' in conf:
@@ -135,7 +135,7 @@ def main():
             logging.debug(f'{m} -> {v}')
 
     trnsl = None
-    if args.resource == 'delta':
+    if args.resource in ['delta', 'deltaai']:
         trnsl = helpers.NcsaTranslator(mapping)
     elif args.resource == 'expanse':
         trnsl = helpers.SdscTranslator(mapping)
